@@ -4,11 +4,10 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Cart {
@@ -17,11 +16,10 @@ public class Cart {
 	@GeneratedValue
 	private long id;
 
-	@OneToMany
-//	@JoinColumn(name = "tryyyyyyyy")
+	@ManyToMany
 	private List<Product> products;
 
-	protected Cart() {
+	public Cart() {
 
 	}
 

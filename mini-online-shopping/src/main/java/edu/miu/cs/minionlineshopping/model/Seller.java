@@ -2,6 +2,7 @@ package edu.miu.cs.minionlineshopping.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +11,7 @@ import javax.persistence.OneToMany;
 @Entity
 public class Seller extends User {
 
-	@OneToMany(mappedBy = "seller")
+	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
 	private List<Product> products;
 
 	public Seller() {

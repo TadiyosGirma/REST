@@ -2,6 +2,7 @@ package edu.miu.cs.minionlineshopping.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,7 +31,7 @@ public class Address {
 	@Column(name = "zip_code")
 	private int zip;
 
-	@OneToMany(mappedBy = "address")
+	@OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
 	List<User> users;
 
 	public Address() {

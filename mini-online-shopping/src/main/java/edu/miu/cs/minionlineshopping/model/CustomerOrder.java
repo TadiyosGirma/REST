@@ -1,46 +1,46 @@
 package edu.miu.cs.minionlineshopping.model;
 
-import java.util.Date;
+import java.sql.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Order {
+public class CustomerOrder {
 
 	@Id
 	@GeneratedValue
 	private long id;
 
-	@Column(name = "order_date")
+	@Column
 	private Date orderDate;
 
-	@Column(name = "arrival_date")
+	@Column
 	private Date arrivalDate;
 
-	@ManyToOne
-	@JoinColumn(name = "buyer_id")
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn // here
 	private Buyer buyer;
 
-	@OneToOne
-	@JoinColumn(name = "orderLine_id")
-	private OrderLine orderLine;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "order_line_id")
+	private OrderLine orerLine;
 
-	public Order() {
+	public CustomerOrder() {
 
 	}
 
-	public Order(Date orderDate, Date arrivalDate, Buyer buyer, OrderLine orderLine) {
+	public CustomerOrder(Date orderDate, Date arrivalDate, Buyer buyer, OrderLine orerLine) {
 		this.orderDate = orderDate;
 		this.arrivalDate = arrivalDate;
 		this.buyer = buyer;
-		this.orderLine = orderLine;
+		this.orerLine = orerLine;
 	}
 
 	public long getId() {
@@ -55,8 +55,8 @@ public class Order {
 		return orderDate;
 	}
 
-	public void setOrderDate(Date orderDate) {
-		this.orderDate = orderDate;
+	public void setOrderDate(Date orderDarte) {
+		this.orderDate = orderDarte;
 	}
 
 	public Date getArrivalDate() {
@@ -75,17 +75,17 @@ public class Order {
 		this.buyer = buyer;
 	}
 
-	public OrderLine getOrderLine() {
-		return orderLine;
+	public OrderLine getOrerLine() {
+		return orerLine;
 	}
 
-	public void setOrderLine(OrderLine orderLine) {
-		this.orderLine = orderLine;
+	public void setOrerLine(OrderLine orerLine) {
+		this.orerLine = orerLine;
 	}
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", orderDate=" + orderDate + ", arrivalDate=" + arrivalDate + ", buyer=" + buyer
-				+ ", orderLine=" + orderLine + "]";
+		return "Order2 [id=" + id + ", orderDarte=" + orderDate + ", arrivalDate=" + arrivalDate + ", buyer=" + buyer
+				+ ", orerLine=" + orerLine + "]";
 	}
 }
