@@ -1,5 +1,6 @@
 package edu.miu.cs.minionlineshopping.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,12 +23,18 @@ public class Buyer extends User {
 
 	}
 
-	public Buyer(String name, int age, String userName, String passWord, Address address) {
+	public Buyer(String name, int age, String userName, String passWord, Address address, Cart cart) {
 		super(name, age, userName, passWord, address);
+		this.cart = cart;
 	}
 
 	public void addOrders(CustomerOrder customerOrder) {
-		customerOrders.add(customerOrder);
+		if (customerOrders == null) {
+			customerOrders = new ArrayList<CustomerOrder>();
+			customerOrders.add(customerOrder);
+		} else {
+			customerOrders.add(customerOrder);
+		}
 	}
 
 	public Cart getCart() {

@@ -3,7 +3,6 @@ package edu.miu.cs.minionlineshopping.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -35,6 +34,7 @@ public class Product {
 		this.description = description;
 		this.price = price;
 		this.seller = seller;
+		this.seller.addProduct(this);
 	}
 
 	public long getId() {
@@ -80,6 +80,6 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [id=" + id + ", name=" + name + ", description=" + description + ", price=" + price
-				+ ", seller=" + seller + "]";
+				+ ", seller=" + seller.toString() + "]";
 	}
 }

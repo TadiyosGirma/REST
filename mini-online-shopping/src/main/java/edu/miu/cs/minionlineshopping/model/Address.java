@@ -1,5 +1,6 @@
 package edu.miu.cs.minionlineshopping.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-public class Address { 
+public class Address {
 
 	@Id
 	@GeneratedValue
@@ -31,19 +32,34 @@ public class Address {
 	@Column(name = "zip_code")
 	private int zip;
 
-	@OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
-	List<User> users;
+//	@OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
+//	List<User> users;
 
 	public Address() {
 
 	}
 
-	public Address(String state, String city, int zip) {
-		super();
+	public Address(String street, String state, String city, int zip) {
+		this.street = street;
 		this.state = state;
 		this.city = city;
 		this.zip = zip;
 	}
+
+//	public void addUser(User user) {
+//		if (users == null) {
+//			users = new ArrayList<User>();
+//		}
+//		users.add(user);
+//	}
+//
+//	public List<User> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(List<User> users) {
+//		this.users = users;
+//	}
 
 	public long getId() {
 		return id;

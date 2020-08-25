@@ -1,11 +1,15 @@
 package edu.miu.cs.minionlineshopping.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -16,7 +20,9 @@ public class Cart {
 	@GeneratedValue
 	private long id;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "Cart_Product", joinColumns = { @JoinColumn(name = "cart_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "product_id") })
 	private List<Product> products;
 
 	public Cart() {
@@ -24,7 +30,12 @@ public class Cart {
 	}
 
 	public void addProduct(Product product) {
-		products.add(product);
+		if (products == null) {
+			products = new ArrayList<Product>();
+			products.add(product);
+		} else {
+			products.add(product);
+		}
 	}
 
 	public List<Product> getProducts() {

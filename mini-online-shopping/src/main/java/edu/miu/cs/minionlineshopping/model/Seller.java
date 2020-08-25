@@ -1,5 +1,6 @@
 package edu.miu.cs.minionlineshopping.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -23,7 +24,12 @@ public class Seller extends User {
 	}
 
 	public void addProduct(Product product) {
-		products.add(product);
+		if (products == null) {
+			products = new ArrayList<Product>();
+			products.add(product);
+		} else {
+			products.add(product);
+		}
 	}
 
 	public List<Product> getProducts() {
@@ -34,8 +40,8 @@ public class Seller extends User {
 		this.products = products;
 	}
 
-	@Override
-	public String toString() {
-		return "Seller [products=" + products + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Seller [products=" + products + "]";
+//	}
 }
