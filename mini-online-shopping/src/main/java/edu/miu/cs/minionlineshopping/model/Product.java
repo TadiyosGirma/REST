@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Product {
 
@@ -22,6 +24,7 @@ public class Product {
 	@Column
 	private double price;
 
+	@JsonIgnoreProperties("products")
 	@ManyToOne
 	private Seller seller;
 

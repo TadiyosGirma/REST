@@ -9,9 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 public class Seller extends User {
 
+	@JsonIgnoreProperties("seller")
 	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
 	private List<Product> products;
 

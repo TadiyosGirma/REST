@@ -42,6 +42,9 @@ public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
 		// ADDRESS
 		Address userAddress = new Address("1000 N 4th Street", "Iowa", "Fairfield", 52557);
 		addressDao.save(userAddress);
+		
+		Address userAddress2 = new Address("1000 N 4th Street", "Dallas", "Texas", 56558);
+		addressDao.save(userAddress2);
 
 		// SELLER
 		Seller seller = new Seller("Tadiyos", 34, "tadi", "tadi157851", userAddress);
@@ -50,6 +53,9 @@ public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
 		// BUYER
 		Buyer buyer = new Buyer("Kidist", 33, "kidi", "kidi157851", userAddress, new Cart());
 		buyerDao.save(buyer);
+		
+		Buyer buyer2 = new Buyer("Blen", 33, "blen", "blen157851", userAddress2, new Cart());
+		buyerDao.save(buyer2);
 
 		// PRODUCT
 		Product product1 = new Product("Tomato", "This is a Tomato", 20.22, seller);
@@ -57,10 +63,26 @@ public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
 		Product product2 = new Product("Apple", "This is an apple", 10.5, seller);
 		productDao.save(product2);
 
-		buyer.getCart().addProduct(product1);
-//		seller.addProduct(product1);
-		buyer.getCart().addProduct(product2);
-//		seller.addProduct(product2);
+		//ADD PRODUT INTO A CART
+			//INTO BUYER1
+		Cart cart = buyer.getCart();
+		cart.addProduct(product1);
+		cart.addProduct(product2);
+		CartDao.save(cart);
+
+//		Cart cart2 = buyer.getCart();
+//		
+//		CartDao.save(cart2);
+		
+			//INTO BUYER2
+		Cart cart2 = buyer2.getCart();
+		cart2.addProduct(product2);
+		CartDao.save(cart2);
+		
+		
+		
+		//
+
 	}
 
 }

@@ -33,8 +33,18 @@ public class Cart {
 		if (products == null) {
 			products = new ArrayList<Product>();
 			products.add(product);
+			System.out.println("here");
 		} else {
+			System.out.println("here2");
 			products.add(product);
+			System.out.println("id: " + this.getId());
+			System.out.println("product: " + this.getProducts());
+		}
+	}
+
+	public void removeProduct(Product product) {
+		if (products != null) {
+			products.remove(product);
 		}
 	}
 
