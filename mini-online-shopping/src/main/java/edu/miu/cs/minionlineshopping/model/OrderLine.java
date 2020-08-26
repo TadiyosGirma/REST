@@ -1,5 +1,7 @@
 package edu.miu.cs.minionlineshopping.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,24 +18,27 @@ public class OrderLine {
 	@GeneratedValue
 	private long id;
 
-	@Column
-	private double quantity;
-
-	@Column
-	private double totalPrice;
+//	private List<Line> orerLines;
 
 	@OneToOne
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
-
+	
 	public OrderLine() {
-
+		
 	}
 
-	public OrderLine(double quantity, Cart cart) {
-		this.quantity = quantity;
+	public OrderLine(Cart cart) {
 		this.cart = cart;
 	}
+	
+//	public void createALine(Cart cart) {
+//		List<Product> products = cart.getProducts();
+//		
+//		for(Product prod: products) {
+//			Line line = new Line(prod., unitPrie)
+//		}
+//	}
 
 	public long getId() {
 		return id;
@@ -43,21 +48,21 @@ public class OrderLine {
 		this.id = id;
 	}
 
-	public double getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-
-	public double getTotalPrice() {
-		return totalPrice;
-	}
-
-	public void setTotalPrice(double totalPrice) {
-		this.totalPrice = totalPrice;
-	}
+//	public double getQuantity() {
+//		return quantity;
+//	}
+//
+//	public void setQuantity(double quantity) {
+//		this.quantity = quantity;
+//	}
+//
+//	public double getTotalPrice() {
+//		return totalPrice;
+//	}
+//
+//	public void setTotalPrice(double totalPrice) {
+//		this.totalPrice = totalPrice;
+//	}
 
 	public Cart getCart() {
 		return cart;
@@ -67,8 +72,5 @@ public class OrderLine {
 		this.cart = cart;
 	}
 
-	@Override
-	public String toString() {
-		return "OrderLine [id=" + id + ", quantity=" + quantity + ", totalPrice=" + totalPrice + ", cart=" + cart + "]";
-	}
+	
 }

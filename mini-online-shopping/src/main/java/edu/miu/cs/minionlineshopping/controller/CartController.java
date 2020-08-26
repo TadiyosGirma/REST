@@ -17,6 +17,7 @@ import edu.miu.cs.minionlineshopping.dao.BuyerDao;
 import edu.miu.cs.minionlineshopping.dao.CartDao;
 import edu.miu.cs.minionlineshopping.model.Buyer;
 import edu.miu.cs.minionlineshopping.model.Cart;
+import edu.miu.cs.minionlineshopping.model.CartItem;
 import edu.miu.cs.minionlineshopping.model.Product;
 import edu.miu.cs.minionlineshopping.serviceImpl.BuyerServiceImpl;
 import edu.miu.cs.minionlineshopping.serviceImpl.CartServiceImpl;
@@ -52,14 +53,14 @@ public class CartController {
 		return cartService.findAllCarts();
 	}
 
-	@PostMapping("/buyers/{id}/cart/{cartId}/products")
-	public Product addProductToCart(@RequestBody Product product, @PathVariable Long cartId) {
-		return cartService.addProduct(cartId, product);
+	@PostMapping("/buyers/{id}/cart/{cartId}/cartitems")
+	public CartItem addCartItemToCart(@RequestBody CartItem cartItem, @PathVariable Long cartId) {
+		return cartService.addCartItem(cartId, cartItem);
 	}
 
-	@DeleteMapping("/buyers/{id}/cart/{cartId}/products")
-	public void removeProductFromCart(@RequestBody Product product, @PathVariable Long cartId) {
-		cartService.removeProduct(cartId, product);
+	@DeleteMapping("/buyers/{id}/cart/{cartId}/cartitems")
+	public void removeProductFromCart(@RequestBody CartItem cartItem, @PathVariable Long cartId) {
+		cartService.removeCartItem(cartId, cartItem);
 	}
 
 }

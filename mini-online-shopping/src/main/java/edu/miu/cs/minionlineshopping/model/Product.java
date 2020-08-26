@@ -24,6 +24,9 @@ public class Product {
 	@Column
 	private double price;
 
+//	@Column
+//	private double quantity;
+
 	@JsonIgnoreProperties("products")
 	@ManyToOne
 	private Seller seller;
@@ -79,6 +82,14 @@ public class Product {
 	public void setSeller(Seller seller) {
 		this.seller = seller;
 	}
+
+//	public double getQuantity() {
+//		return quantity;
+//	}
+//
+//	public void setQuantity(double quantity) {
+//		this.quantity = quantity;
+//	}
 
 	@Override
 	public String toString() {

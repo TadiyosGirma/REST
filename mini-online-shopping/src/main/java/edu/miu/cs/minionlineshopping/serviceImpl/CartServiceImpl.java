@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import edu.miu.cs.minionlineshopping.dao.SellerDao;
 import edu.miu.cs.minionlineshopping.dao.CartDao;
+import edu.miu.cs.minionlineshopping.dao.CartItemDao;
 import edu.miu.cs.minionlineshopping.model.Buyer;
 import edu.miu.cs.minionlineshopping.model.Cart;
+import edu.miu.cs.minionlineshopping.model.CartItem;
 import edu.miu.cs.minionlineshopping.model.Product;
 import edu.miu.cs.minionlineshopping.model.Seller;
 
@@ -19,6 +21,9 @@ public class CartServiceImpl {
 	@Autowired
 	CartDao CartDao;
 
+	@Autowired
+	CartItemDao cartItemDao;
+
 	public Optional<Cart> findACart(Long id) {
 		return CartDao.findById(id);
 	}
@@ -27,27 +32,28 @@ public class CartServiceImpl {
 		return CartDao.findAll();
 	}
 
-	public Product addProduct(Long cartId, Product product) {
+	public CartItem addCartItem(Long cartId, CartItem cartItem) {
 		Optional<Cart> cartOpt = findACart(cartId);
 
 		if (cartOpt.isPresent()) {
 			Cart cartObj = cartOpt.get();
-			cartObj.addProduct(product);
-			CartDao.save(cartObj); //CORRECT HERE
- 
-			return product;
+			cartObj.addCartItem(cartItem);
+			CartDao.save(cartObj);
+
+			return cartItem;
 		} else {
-			return null; 
+			return null;
 		}
 	}
 
-	public void removeProduct(Long cartId, Product product) {
+	public void removeCartItem(Long cartId, CartItem cartItem) {
 		Optional<Cart> cartOpt = findACart(cartId);
 
 		if (cartOpt.isPresent()) {
 			Cart cartObj = cartOpt.get();
-			cartObj.removeProduct(product);
+			cartObj.removeCartItem(cartItem);
 			CartDao.save(cartObj);
+			cartItemDao.deleteById(cartItem.getId());
 		}
 	}
 }

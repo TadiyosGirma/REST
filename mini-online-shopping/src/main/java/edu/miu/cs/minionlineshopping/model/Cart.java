@@ -5,12 +5,10 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -20,40 +18,37 @@ public class Cart {
 	@GeneratedValue
 	private long id;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name = "Cart_Product", joinColumns = { @JoinColumn(name = "cart_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "product_id") })
-	private List<Product> products;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "cart_id")
+	private List<CartItem> cartItems;
 
 	public Cart() {
 
 	}
 
-	public void addProduct(Product product) {
-		if (products == null) {
-			products = new ArrayList<Product>();
-			products.add(product);
-			System.out.println("here");
+	public void addCartItem(CartItem cartItem) {
+		if (cartItems == null) {
+			cartItems = new ArrayList<CartItem>();
+			cartItems.add(cartItem);
 		} else {
-			System.out.println("here2");
-			products.add(product);
-			System.out.println("id: " + this.getId());
-			System.out.println("product: " + this.getProducts());
+			cartItems.add(cartItem);
 		}
 	}
 
-	public void removeProduct(Product product) {
-		if (products != null) {
-			products.remove(product);
+	public void removeCartItem(CartItem cartItem) {
+		if (cartItems != null) {
+			cartItems.remove(cartItem);
+			System.out.println(cartItem);
+			System.out.println(cartItems);
 		}
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public List<CartItem> getCartItems() {
+		return cartItems;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setCartItems(List<CartItem> cartItems) {
+		this.cartItems = cartItems;
 	}
 
 	public long getId() {
@@ -66,6 +61,6 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return "Cart [id=" + id + ", products=" + products + "]";
+		return "Cart [id=" + id + ", cartItems=" + cartItems + "]";
 	}
 }
