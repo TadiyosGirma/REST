@@ -30,8 +30,8 @@ public class CartController {
 	@Autowired
 	CartServiceImpl cartService;
 
-	@GetMapping("/buyers/{id}/cart")
-	public Optional<Cart> findAllItemsInCart(@PathVariable Long id) {
+	@GetMapping("/buyers/{id}/carts")
+	public Optional<Cart> findACart(@PathVariable Long id) {
 		Optional<Buyer> buyerOpt = buyerService.findABuyer(id);
 		if (buyerOpt.isPresent()) {
 			Buyer buyerObj = buyerOpt.get();
@@ -48,18 +48,18 @@ public class CartController {
 		}
 	}
 
-	@GetMapping("/buyers/cart")
+	@GetMapping("/buyers/carts")
 	public List<Cart> findAllCarts() {
 		return cartService.findAllCarts();
 	}
 
-	@PostMapping("/buyers/{id}/cart/{cartId}/cartitems")
+	@PostMapping("/buyers/{id}/carts/{cartId}/cartitems")
 	public CartItem addCartItemToCart(@RequestBody CartItem cartItem, @PathVariable Long cartId) {
 		return cartService.addCartItem(cartId, cartItem);
 	}
 
-	@DeleteMapping("/buyers/{id}/cart/{cartId}/cartitems")
-	public void removeProductFromCart(@RequestBody CartItem cartItem, @PathVariable Long cartId) {
+	@DeleteMapping("/buyers/{id}/carts/{cartId}/cartitems")
+	public void removeCartItemFromCart(@RequestBody CartItem cartItem, @PathVariable Long cartId) {
 		cartService.removeCartItem(cartId, cartItem);
 	}
 

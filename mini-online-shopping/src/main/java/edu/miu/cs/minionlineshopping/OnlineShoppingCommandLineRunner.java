@@ -69,15 +69,15 @@ public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
 		productDao.save(product2);
 
 		// CART ITEM
-		CartItem cartItem1 = new CartItem(product1, 2);
-		CartItem cartItem2 = new CartItem(product2, 5);
+		CartItem cartItem1 = new CartItem(product1, 2, buyer.getCart());
+		CartItem cartItem2 = new CartItem(product2, 5, buyer.getCart());
 		cartItemDao.save(cartItem1);
 		cartItemDao.save(cartItem2);
 
-		CartItem cartItem3 = new CartItem(product2, 15);
+		CartItem cartItem3 = new CartItem(product2, 15, buyer2.getCart());
 		cartItemDao.save(cartItem3);
 
-		// ADD PRODUT INTO A CART
+		// ADD PRODUCT INTO A CART
 		// INTO BUYER1
 		Cart cart = buyer.getCart();
 

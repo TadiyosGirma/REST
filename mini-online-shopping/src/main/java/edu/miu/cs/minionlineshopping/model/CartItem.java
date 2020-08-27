@@ -19,17 +19,20 @@ public class CartItem {
 	private int quantity;
 
 	@ManyToOne
-	@JoinColumn(name = "My_product_id")
+	@JoinColumn(name = "product_id")
 	private Product product;
+	
+	@ManyToOne
+	private Cart cart;
 
 	public CartItem() {
 
 	}
 
-	public CartItem(Product product, int quantity) {
-		super();
+	public CartItem(Product product, int quantity, Cart cart) {
 		this.product = product;
 		this.quantity = quantity;
+		this.cart = cart;
 	}
 
 	public long getId() {
