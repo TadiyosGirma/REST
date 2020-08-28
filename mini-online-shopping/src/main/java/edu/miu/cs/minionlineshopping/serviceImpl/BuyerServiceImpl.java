@@ -17,7 +17,7 @@ public class BuyerServiceImpl {
 	@Autowired
 	BuyerDao buyerDao;
 
-	public Buyer saveBuyer(Buyer buyer) {
+	public Buyer createBuyer(Buyer buyer) {
 		return buyerDao.save(buyer);
 	}
 

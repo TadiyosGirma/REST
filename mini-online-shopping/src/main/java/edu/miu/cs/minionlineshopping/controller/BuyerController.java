@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,13 +23,15 @@ public class BuyerController {
 	BuyerServiceImpl buyerService;
 
 	@PostMapping("/buyers")
-	public void createBuyer(@RequestBody Buyer buyer) {
-		buyerService.saveBuyer(buyer);
+	public ResponseEntity<Buyer> createBuyer(@RequestBody Buyer buyer) {
+		Buyer savedBuyer = buyerService.createBuyer(buyer);
+
+		return new ResponseEntity<Buyer>(savedBuyer, HttpStatus.CREATED);
 	}
 
 	@PostMapping("buyers/{id}")
 	public void updateBuyer(@RequestBody Buyer buyer) {
-		buyerService.updateBuyer(buyer);
+		buyerService.updateBuyer(buyer); 
 	}
 
 	@GetMapping("/buyers")
@@ -42,6 +46,6 @@ public class BuyerController {
 
 	@DeleteMapping("/buyers/{id}")
 	public void deleteBuyer(@PathVariable Long id) {
-		buyerService.deleteBuyer(id);                 
+		buyerService.deleteBuyer(id);
 	}
 }

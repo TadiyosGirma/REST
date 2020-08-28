@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +23,10 @@ public class SellerController {
 	SellerServiceImpl sellerService;
 
 	@PostMapping("/sellers")
-	public void createSeller(@RequestBody Seller seller) {
-		sellerService.saveSeller(seller);
+	public ResponseEntity<Seller> createSeller(@RequestBody Seller seller) {
+		Seller savedSeller = sellerService.createSeller(seller);
+
+		return new ResponseEntity<Seller>(savedSeller, HttpStatus.CREATED);
 	}
 
 	@PostMapping("sellers/{id}")
@@ -39,13 +43,9 @@ public class SellerController {
 	public Optional<Seller> findASeller(@PathVariable Long id) {
 		return sellerService.findSeller(id);
 	}
-	
+
 	@DeleteMapping("/sellers/{id}")
 	public void deleteSeller(@PathVariable Long id) {
 		sellerService.deleteSeller(id);
 	}
 }
-
-
-
-

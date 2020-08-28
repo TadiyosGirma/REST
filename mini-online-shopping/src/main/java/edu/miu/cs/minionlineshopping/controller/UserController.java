@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +23,10 @@ public class UserController {
 	UserServiceImpl userService;
 
 	@PostMapping("/users")
-	public void createuser(@RequestBody User user) {
-		userService.saveUser(user);
+	public ResponseEntity<User> createUser(@RequestBody User user) {
+		User savedUser = userService.createUser(user);
+
+		return new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 	}
 
 	@PostMapping("users/{id}")
@@ -39,7 +43,7 @@ public class UserController {
 	public Optional<User> findAUser(@PathVariable Long id) {
 		return userService.findUser(id);
 	}
-	
+
 	@DeleteMapping("/users/{id}")
 	public void deleteUser(@PathVariable Long id) {
 		userService.deleteUser(id);

@@ -15,7 +15,7 @@ public class UserServiceImpl {
 	@Autowired
 	UserDao userDao;
 
-	public User saveUser(User user) {
+	public User createUser(User user) {
 		return userDao.save(user);
 	}
 

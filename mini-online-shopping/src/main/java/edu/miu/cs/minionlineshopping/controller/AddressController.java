@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,13 @@ public class AddressController {
 	@Autowired
 	AddressServiceImpl addressService;
 
+	@PostMapping("/address")
+	public ResponseEntity<Address> createAddress(@RequestBody Address address) {
+		Address savedAddress = addressService.createAddress(address);
+
+		return new ResponseEntity<Address>(savedAddress, HttpStatus.CREATED);
+	}
+
 	@GetMapping("/address")
 	public List<Address> getAllAdresses() {
 		return addressService.findAllAddresses();
@@ -29,11 +38,6 @@ public class AddressController {
 	@GetMapping("/address/{id}")
 	public Optional<Address> getAllAdresses(@PathVariable Long id) {
 		return addressService.findAnAddresses(id);
-	}
-
-	@PostMapping("/address")
-	public Address createAddress(@RequestBody Address address) {
-		return addressService.createAddress(address);
 	}
 
 	@PutMapping("/address/{id}")

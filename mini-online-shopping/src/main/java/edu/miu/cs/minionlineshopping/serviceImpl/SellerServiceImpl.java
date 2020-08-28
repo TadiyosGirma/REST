@@ -17,7 +17,7 @@ public class SellerServiceImpl {
 	@Autowired
 	SellerDao sellerDao;
 
-	public Seller saveSeller(Seller seller) {
+	public Seller createSeller(Seller seller) {
 		return sellerDao.save(seller);
 	}
 
