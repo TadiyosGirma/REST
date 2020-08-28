@@ -18,11 +18,10 @@ public class Cart {
 	@GeneratedValue
 	private long id;
 
-	@OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
-//	@JoinColumn(name = "cart_id")
+	@OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
 	private List<CartItem> cartItems;
 
-	public Cart() {
+	protected Cart() {
 
 	}
 

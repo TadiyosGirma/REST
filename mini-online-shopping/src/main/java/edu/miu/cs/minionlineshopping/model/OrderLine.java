@@ -31,7 +31,7 @@ public class OrderLine {
 	@Column
 	private double totalAfterTax;
 
-	public OrderLine() {
+	protected OrderLine() {
 
 	}
 
@@ -49,7 +49,7 @@ public class OrderLine {
 			totalBeforeTax += (cartItem.getQuantity() * cartItem.getProduct().getPrice());
 		}
 
-		totalAfterTax = tax.getValue()/100 * totalBeforeTax;
+		totalAfterTax = tax.getValue() / 100 * totalBeforeTax;
 	}
 
 	public long getId() {

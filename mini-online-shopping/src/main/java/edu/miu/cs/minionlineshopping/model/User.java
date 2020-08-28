@@ -33,7 +33,7 @@ public class User {
 	@ManyToOne
 	private Address address;
 
-	public User() {
+	protected User() {
 
 	}
 

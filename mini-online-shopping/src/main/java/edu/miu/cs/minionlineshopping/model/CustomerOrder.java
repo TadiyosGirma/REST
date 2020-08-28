@@ -25,14 +25,14 @@ public class CustomerOrder {
 	private Date arrivalDate;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn // here
+	@JoinColumn
 	private Buyer buyer;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_line_id")
 	private OrderLine orerLine;
 
-	public CustomerOrder() {
+	protected CustomerOrder() {
 
 	}
 

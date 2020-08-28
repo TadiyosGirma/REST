@@ -21,11 +21,11 @@ public class CartItem {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
-	
+
 	@ManyToOne
 	private Cart cart;
 
-	public CartItem() {
+	protected CartItem() {
 
 	}
 
@@ -58,7 +58,7 @@ public class CartItem {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

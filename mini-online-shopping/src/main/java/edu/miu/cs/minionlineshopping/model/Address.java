@@ -35,7 +35,7 @@ public class Address {
 //	@OneToMany(mappedBy = "address", cascade = CascadeType.ALL)
 //	List<User> users;
 
-	public Address() {
+	protected Address() {
 
 	}
 

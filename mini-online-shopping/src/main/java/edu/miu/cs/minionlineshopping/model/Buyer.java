@@ -17,9 +17,9 @@ public class Buyer extends User {
 	private Cart cart;
 
 	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
-	List<CustomerOrder> customerOrders;
+	private List<CustomerOrder> customerOrders;
 
-	public Buyer() {
+	protected Buyer() {
 
 	}
 
