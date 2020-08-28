@@ -16,6 +16,7 @@ import edu.miu.cs.minionlineshopping.dao.ProductDao;
 import edu.miu.cs.minionlineshopping.dao.SellerDao;
 import edu.miu.cs.minionlineshopping.dao.CartDao;
 import edu.miu.cs.minionlineshopping.dao.CartItemDao;
+import edu.miu.cs.minionlineshopping.dao.OrderLineDao;
 import edu.miu.cs.minionlineshopping.model.Address;
 import edu.miu.cs.minionlineshopping.model.Buyer;
 import edu.miu.cs.minionlineshopping.model.Cart;
@@ -23,6 +24,7 @@ import edu.miu.cs.minionlineshopping.model.CartItem;
 import edu.miu.cs.minionlineshopping.model.OrderLine;
 import edu.miu.cs.minionlineshopping.model.Product;
 import edu.miu.cs.minionlineshopping.model.Seller;
+import edu.miu.cs.minionlineshopping.model.Tax;
 import edu.miu.cs.minionlineshopping.serviceImpl.AddressServiceImpl;
 
 @Component
@@ -40,6 +42,8 @@ public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
 	private ProductDao productDao;
 	@Autowired
 	private CartItemDao cartItemDao;
+	@Autowired
+	private OrderLineDao orderLineDao;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -78,21 +82,24 @@ public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
 		cartItemDao.save(cartItem3);
 
 		// ADD PRODUCT INTO A CART
-		// INTO BUYER1
-		Cart cart = buyer.getCart();
+		// into buyer1
+		Cart cart1 = buyer.getCart();
 
-		cart.addCartItem(cartItem1);
-		cart.addCartItem(cartItem2);
-		CartDao.save(cart);
+		cart1.addCartItem(cartItem1);
+		cart1.addCartItem(cartItem2);
+		CartDao.save(cart1);
 
-		// INTO BUYER2
+		// into buyer2
 		Cart cart2 = buyer2.getCart();
 		cart2.addCartItem(cartItem3);
 		CartDao.save(cart2);
 
 		// ORDER LINE
-//		OrderLine orderLine1 = new OrderLine(quantity, cart2)
+		OrderLine orderLine1 = new OrderLine(cart1, Tax.MEDIUM);
+		orderLineDao.save(orderLine1);
 
+		OrderLine orderLine2 = new OrderLine(cart2, Tax.MEDIUM);
+		orderLineDao.save(orderLine2);
 	}
 
 }

@@ -18,27 +18,39 @@ public class OrderLine {
 	@GeneratedValue
 	private long id;
 
-//	private List<Line> orerLines;
-
 	@OneToOne
 	@JoinColumn(name = "cart_id")
 	private Cart cart;
-	
+
+	@Column
+	private double totalBeforeTax;
+
+	@Column
+	private Tax tax;
+
+	@Column
+	private double totalAfterTax;
+
 	public OrderLine() {
-		
+
 	}
 
-	public OrderLine(Cart cart) {
+	public OrderLine(Cart cart, Tax taxPercentage) {
 		this.cart = cart;
+		tax = taxPercentage;
+		calculatePayment(cart);
 	}
-	
-//	public void createALine(Cart cart) {
-//		List<Product> products = cart.getProducts();
-//		
-//		for(Product prod: products) {
-//			Line line = new Line(prod., unitPrie)
-//		}
-//	}
+
+	private void calculatePayment(Cart cart) {
+
+		List<CartItem> cartItems = cart.getCartItems();
+
+		for (CartItem cartItem : cartItems) {
+			totalBeforeTax += (cartItem.getQuantity() * cartItem.getProduct().getPrice());
+		}
+
+		totalAfterTax = tax.getValue()/100 * totalBeforeTax;
+	}
 
 	public long getId() {
 		return id;
@@ -48,22 +60,6 @@ public class OrderLine {
 		this.id = id;
 	}
 
-//	public double getQuantity() {
-//		return quantity;
-//	}
-//
-//	public void setQuantity(double quantity) {
-//		this.quantity = quantity;
-//	}
-//
-//	public double getTotalPrice() {
-//		return totalPrice;
-//	}
-//
-//	public void setTotalPrice(double totalPrice) {
-//		this.totalPrice = totalPrice;
-//	}
-
 	public Cart getCart() {
 		return cart;
 	}
@@ -72,5 +68,27 @@ public class OrderLine {
 		this.cart = cart;
 	}
 
-	
+	public double getTotalBeforeTax() {
+		return totalBeforeTax;
+	}
+
+	public void setTotalBeforeTax(double totalBeforeTax) {
+		this.totalBeforeTax = totalBeforeTax;
+	}
+
+	public Tax getTax() {
+		return tax;
+	}
+
+	public void setTax(Tax tax) {
+		this.tax = tax;
+	}
+
+	public double getTotalAfterTax() {
+		return totalAfterTax;
+	}
+
+	public void setTotalAfterTax(double totalAfterTax) {
+		this.totalAfterTax = totalAfterTax;
+	}
 }
