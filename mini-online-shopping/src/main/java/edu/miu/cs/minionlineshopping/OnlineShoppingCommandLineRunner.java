@@ -4,11 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.sql.Date;
 
 import edu.miu.cs.minionlineshopping.dao.AddressDao;
 import edu.miu.cs.minionlineshopping.dao.BuyerDao;
@@ -16,16 +12,17 @@ import edu.miu.cs.minionlineshopping.dao.ProductDao;
 import edu.miu.cs.minionlineshopping.dao.SellerDao;
 import edu.miu.cs.minionlineshopping.dao.CartDao;
 import edu.miu.cs.minionlineshopping.dao.CartItemDao;
+import edu.miu.cs.minionlineshopping.dao.CustomerOrderDao;
 import edu.miu.cs.minionlineshopping.dao.OrderLineDao;
 import edu.miu.cs.minionlineshopping.model.Address;
 import edu.miu.cs.minionlineshopping.model.Buyer;
 import edu.miu.cs.minionlineshopping.model.Cart;
 import edu.miu.cs.minionlineshopping.model.CartItem;
+import edu.miu.cs.minionlineshopping.model.CustomerOrder;
 import edu.miu.cs.minionlineshopping.model.OrderLine;
 import edu.miu.cs.minionlineshopping.model.Product;
 import edu.miu.cs.minionlineshopping.model.Seller;
 import edu.miu.cs.minionlineshopping.model.Tax;
-import edu.miu.cs.minionlineshopping.serviceImpl.AddressServiceImpl;
 
 @Component
 public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
@@ -44,6 +41,8 @@ public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
 	private CartItemDao cartItemDao;
 	@Autowired
 	private OrderLineDao orderLineDao;
+	@Autowired
+	private CustomerOrderDao customerOrderDao;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -96,10 +95,20 @@ public class OnlineShoppingCommandLineRunner implements CommandLineRunner {
 
 		// ORDER LINE
 		OrderLine orderLine1 = new OrderLine(cart1, Tax.MEDIUM);
-		orderLineDao.save(orderLine1);
+//		orderLineDao.save(orderLine1);
 
 		OrderLine orderLine2 = new OrderLine(cart2, Tax.MEDIUM);
-		orderLineDao.save(orderLine2);
+//		orderLineDao.save(orderLine2);
+
+		// CUSTOMER_ORDER
+		CustomerOrder customerOrder1 = new CustomerOrder(new Date(2020, 8, 27), new Date(2020, 8, 30),
+				orderLine1);
+		customerOrderDao.save(customerOrder1);
+//		customerOrder1.setBuyer(buyer);
+		CustomerOrder customerOrder2 = new CustomerOrder(new Date(2020, 8, 27), new Date(2020, 8, 30),
+				orderLine2);
+		customerOrder2.setBuyer(buyer2);
+//		customerOrderDao.save(customerOrder2);
 	}
 
 }

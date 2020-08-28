@@ -36,10 +36,10 @@ public class CustomerOrder {
 
 	}
 
-	public CustomerOrder(Date orderDate, Date arrivalDate, Buyer buyer, OrderLine orerLine) {
+	public CustomerOrder(Date orderDate, Date arrivalDate, OrderLine orerLine) {
 		this.orderDate = orderDate;
 		this.arrivalDate = arrivalDate;
-		this.buyer = buyer;
+//		this.buyer = buyer;
 		this.orerLine = orerLine;
 	}
 
