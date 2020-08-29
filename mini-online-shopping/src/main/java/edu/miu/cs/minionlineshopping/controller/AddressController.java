@@ -31,7 +31,7 @@ public class AddressController {
 
 	@GetMapping("/address/{id}")
 	public Optional<Address> retriveAdress(@PathVariable Long id) {
-		return addressService.findAnAddresses(id);
+		return addressService.findOneAddress(id);
 	}
 
 	@GetMapping("/address")

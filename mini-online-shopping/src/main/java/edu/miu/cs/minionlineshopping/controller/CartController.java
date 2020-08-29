@@ -32,7 +32,7 @@ public class CartController {
 
 	@GetMapping("/buyers/{id}/carts")
 	public Optional<Cart> retriveCart(@PathVariable Long id) {
-		Optional<Buyer> buyerOpt = buyerService.findABuyer(id);
+		Optional<Buyer> buyerOpt = buyerService.findOneBuyer(id);
 		if (buyerOpt.isPresent()) {
 			Buyer buyerObj = buyerOpt.get();
 			Long cartId = buyerObj.getCart().getId();

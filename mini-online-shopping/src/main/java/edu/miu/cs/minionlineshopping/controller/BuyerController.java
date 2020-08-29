@@ -25,36 +25,22 @@ public class BuyerController {
 
 	@PostMapping("/buyers")
 	public ResponseEntity<Buyer> createBuyer(@RequestBody Buyer buyer) {
-		Buyer savedBuyer = buyerService.createBuyer(buyer);
-
-		return new ResponseEntity<Buyer>(savedBuyer, HttpStatus.CREATED);
+		return buyerService.createBuyer(buyer);
 	}
 
 	@GetMapping("/buyers/{id}")
 	public Optional<Buyer> retriveBuyer(@PathVariable Long id) {
-		Optional<Buyer> buyerReturned = buyerService.findABuyer(id);
-
-		if (!buyerReturned.isPresent()) {
-			throw new UserNotFoundException("id: " + id);
-		} else {
-			return buyerReturned;
-		}
+		return buyerService.findOneBuyer(id);
 	}
 
 	@GetMapping("/buyers")
 	public List<Buyer> retriveAllBuyers() {
-		List<Buyer> buyerReturned = buyerService.findAllBuyers();
-
-		if (buyerReturned.isEmpty()) {
-			throw new UserNotFoundException("There are no registered Buyers");
-		} else {
-			return buyerReturned;
-		}
+		return buyerService.findAllBuyers();
 	}
 
 	@PostMapping("buyers/{id}")
-	public void updateBuyer(@RequestBody Buyer buyer) {
-		buyerService.updateBuyer(buyer);
+	public ResponseEntity<Buyer> updateBuyer(@PathVariable Long id, @RequestBody Buyer buyer) {
+		return buyerService.updateBuyer(id, buyer);
 	}
 
 	@DeleteMapping("/buyers/{id}")

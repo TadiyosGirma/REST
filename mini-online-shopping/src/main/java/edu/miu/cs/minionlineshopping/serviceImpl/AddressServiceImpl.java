@@ -23,6 +23,16 @@ public class AddressServiceImpl {
 		return new ResponseEntity<Address>(savedAddress, HttpStatus.CREATED);
 	}
 
+	public Optional<Address> findOneAddress(Long id) {
+		Optional<Address> addressReturned = addressDao.findById(id);
+
+		if (!addressReturned.isPresent()) {
+			throw new AddressNotFoundException("id: " + id);
+		} else {
+			return addressReturned;
+		}
+	}
+
 	public List<Address> findAllAddresses() {
 		List<Address> addressesReturned = addressDao.findAll();
 
@@ -30,16 +40,6 @@ public class AddressServiceImpl {
 			throw new AddressNotFoundException("There are no registered addresses");
 		} else {
 			return addressesReturned;
-		}
-	}
-
-	public Optional<Address> findAnAddresses(Long id) {
-		Optional<Address> addressReturned = addressDao.findById(id);
-
-		if (!addressReturned.isPresent()) {
-			throw new AddressNotFoundException("id: " + id);
-		} else {
-			return addressReturned;
 		}
 	}
 
