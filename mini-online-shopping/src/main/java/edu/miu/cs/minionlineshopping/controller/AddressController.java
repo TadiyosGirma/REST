@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.miu.cs.minionlineshopping.exceptions.AddressNotFoundException;
 import edu.miu.cs.minionlineshopping.model.Address;
 import edu.miu.cs.minionlineshopping.serviceImpl.AddressServiceImpl;
 
@@ -26,23 +27,33 @@ public class AddressController {
 	@PostMapping("/address")
 	public ResponseEntity<Address> createAddress(@RequestBody Address address) {
 		Address savedAddress = addressService.createAddress(address);
-
 		return new ResponseEntity<Address>(savedAddress, HttpStatus.CREATED);
 	}
 
-	@GetMapping("/address")
-	public List<Address> getAllAdresses() {
-		return addressService.findAllAddresses();
+	@GetMapping("/address/{id}")
+	public Optional<Address> retrivedress(@PathVariable Long id) {
+		Optional<Address> addressReturned = addressService.findAnAddresses(id);
+
+		if (!addressReturned.isPresent()) {
+			throw new AddressNotFoundException("id: " + id);
+		} else {
+			return addressReturned;
+		}
 	}
 
-	@GetMapping("/address/{id}")
-	public Optional<Address> getAllAdresses(@PathVariable Long id) {
-		return addressService.findAnAddresses(id);
+	@GetMapping("/address")
+	public List<Address> retriveAllAdresses() {
+		List<Address> addressesReturned = addressService.findAllAddresses();
+
+		if (addressesReturned.isEmpty()) {
+			throw new AddressNotFoundException("There are no registered addresses");
+		} else {
+			return addressesReturned;
+		}
 	}
 
 	@PutMapping("/address/{id}")
 	public Address updateAddress(@RequestBody Address address) {
-		System.out.println("here");
 		return addressService.updateAddress(address);
 	}
 

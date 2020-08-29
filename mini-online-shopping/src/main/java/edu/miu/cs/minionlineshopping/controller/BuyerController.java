@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.miu.cs.minionlineshopping.exceptions.UserNotFoundException;
 import edu.miu.cs.minionlineshopping.model.Buyer;
 import edu.miu.cs.minionlineshopping.serviceImpl.BuyerServiceImpl;
 
@@ -29,19 +30,31 @@ public class BuyerController {
 		return new ResponseEntity<Buyer>(savedBuyer, HttpStatus.CREATED);
 	}
 
-	@PostMapping("buyers/{id}")
-	public void updateBuyer(@RequestBody Buyer buyer) {
-		buyerService.updateBuyer(buyer); 
+	@GetMapping("/buyers/{id}")
+	public Optional<Buyer> retriveBuyer(@PathVariable Long id) {
+		Optional<Buyer> buyerReturned = buyerService.findABuyer(id);
+
+		if (!buyerReturned.isPresent()) {
+			throw new UserNotFoundException("id: " + id);
+		} else {
+			return buyerReturned;
+		}
 	}
 
 	@GetMapping("/buyers")
-	public List<Buyer> findAllBuyers() {
-		return buyerService.findAllBuyers();
+	public List<Buyer> retriveAllBuyers() {
+		List<Buyer> buyerReturned = buyerService.findAllBuyers();
+
+		if (buyerReturned.isEmpty()) {
+			throw new UserNotFoundException("There are no registered Buyers");
+		} else {
+			return buyerReturned;
+		}
 	}
 
-	@GetMapping("/buyers/{id}")
-	public Optional<Buyer> findABuyer(@PathVariable Long id) {
-		return buyerService.findABuyer(id);
+	@PostMapping("buyers/{id}")
+	public void updateBuyer(@RequestBody Buyer buyer) {
+		buyerService.updateBuyer(buyer);
 	}
 
 	@DeleteMapping("/buyers/{id}")

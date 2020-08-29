@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.miu.cs.minionlineshopping.exceptions.UserNotFoundException;
 import edu.miu.cs.minionlineshopping.model.User;
 import edu.miu.cs.minionlineshopping.serviceImpl.UserServiceImpl;
 
@@ -29,19 +30,31 @@ public class UserController {
 		return new ResponseEntity<User>(savedUser, HttpStatus.CREATED);
 	}
 
-	@PostMapping("users/{id}")
-	public void updateUser(@RequestBody User user) {
-		userService.updateUser(user);
+	@GetMapping("users/{id}")
+	public Optional<User> retriveUser(@PathVariable Long id) {
+		Optional<User> userReturned = userService.findUser(id);
+
+		if (!userReturned.isPresent()) {
+			throw new UserNotFoundException("id: " + id);
+		} else {
+			return userReturned;
+		}
 	}
 
 	@GetMapping("users")
-	public List<User> findAllUsers() {
-		return userService.findAllUser();
+	public List<User> retriveAllUsers() {
+		List<User> usersReturned = userService.findAllUser();
+
+		if (usersReturned.isEmpty()) {
+			throw new UserNotFoundException("There are no registered users");
+		} else {
+			return usersReturned;
+		}
 	}
 
-	@GetMapping("users/{id}")
-	public Optional<User> findAUser(@PathVariable Long id) {
-		return userService.findUser(id);
+	@PostMapping("users/{id}")
+	public void updateUser(@RequestBody User user) {
+		userService.updateUser(user);
 	}
 
 	@DeleteMapping("/users/{id}")

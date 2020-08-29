@@ -31,7 +31,7 @@ public class CartController {
 	CartServiceImpl cartService;
 
 	@GetMapping("/buyers/{id}/carts")
-	public Optional<Cart> findACart(@PathVariable Long id) {
+	public Optional<Cart> retriveCart(@PathVariable Long id) {
 		Optional<Buyer> buyerOpt = buyerService.findABuyer(id);
 		if (buyerOpt.isPresent()) {
 			Buyer buyerObj = buyerOpt.get();
@@ -49,7 +49,7 @@ public class CartController {
 	}
 
 	@GetMapping("/buyers/carts")
-	public List<Cart> findAllCarts() {
+	public List<Cart> retriveAllCarts() {
 		return cartService.findAllCarts();
 	}
 
