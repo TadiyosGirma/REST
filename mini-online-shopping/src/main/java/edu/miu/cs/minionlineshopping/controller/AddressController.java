@@ -26,35 +26,22 @@ public class AddressController {
 
 	@PostMapping("/address")
 	public ResponseEntity<Address> createAddress(@RequestBody Address address) {
-		Address savedAddress = addressService.createAddress(address);
-		return new ResponseEntity<Address>(savedAddress, HttpStatus.CREATED);
+		return addressService.createAddress(address);
 	}
 
 	@GetMapping("/address/{id}")
-	public Optional<Address> retrivedress(@PathVariable Long id) {
-		Optional<Address> addressReturned = addressService.findAnAddresses(id);
-
-		if (!addressReturned.isPresent()) {
-			throw new AddressNotFoundException("id: " + id);
-		} else {
-			return addressReturned;
-		}
+	public Optional<Address> retriveAdress(@PathVariable Long id) {
+		return addressService.findAnAddresses(id);
 	}
 
 	@GetMapping("/address")
 	public List<Address> retriveAllAdresses() {
-		List<Address> addressesReturned = addressService.findAllAddresses();
-
-		if (addressesReturned.isEmpty()) {
-			throw new AddressNotFoundException("There are no registered addresses");
-		} else {
-			return addressesReturned;
-		}
+		return addressService.findAllAddresses();
 	}
 
 	@PutMapping("/address/{id}")
-	public Address updateAddress(@RequestBody Address address) {
-		return addressService.updateAddress(address);
+	public ResponseEntity<Address> updateAddress(@PathVariable Long id, @RequestBody Address address) {
+		return addressService.updateAddress(id, address);
 	}
 
 	@DeleteMapping("/address/{id}")

@@ -15,8 +15,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(NotFoundException.class)
-	public final ResponseEntity<Object> handleAddressNotFoundException(NotFoundException ex,
-			WebRequest request) {
+	public final ResponseEntity<Object> handleAddressNotFoundException(NotFoundException ex, WebRequest request) {
 
 		if (ex instanceof NotFoundException) {
 			ExceptionResponseFormat exceptionResponseFormat = new ExceptionResponseFormat(new Date(), ex.getMessage(),
@@ -24,7 +23,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
 			return new ResponseEntity<Object>(exceptionResponseFormat, HttpStatus.NOT_FOUND);
 		}
-		
+
 		else {
 			ExceptionResponseFormat exceptionResponseFormat = new ExceptionResponseFormat(new Date(), ex.getMessage(),
 					request.getDescription(false));
