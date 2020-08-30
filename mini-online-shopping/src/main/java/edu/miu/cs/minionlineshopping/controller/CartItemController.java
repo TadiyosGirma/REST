@@ -3,6 +3,7 @@ package edu.miu.cs.minionlineshopping.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,17 +24,11 @@ public class CartItemController {
 
 	@GetMapping("/buyers/{id}/carts/{cartId}/cartItems/{cartItemId}")
 	public Optional<CartItem> retriveCartItem(@PathVariable Long cartItemId) {
-		Optional<CartItem> cartItemReturnded = cartItemServiceImpl.findACartItem(cartItemId);
-
-		if (!cartItemReturnded.isPresent()) {
-			throw new CartItemNotFoundException("id: " + cartItemId);
-		} else {
-			return cartItemReturnded;
-		}
+		return cartItemServiceImpl.findOneCartItem(cartItemId);
 	}
 
 	@PatchMapping("/buyers/{id}/carts/{cartId}/cartItems/{cartItemId}")
-	public CartItem updateCartItem(@RequestBody CartItem cartItem) {
-		return cartItemServiceImpl.updateCartItem(cartItem);
+	public ResponseEntity<CartItem> updateCartItem(@PathVariable Long cartItemId, @RequestBody CartItem cartItem) {
+		return cartItemServiceImpl.updateCartItem(cartItemId, cartItem);
 	}
 }

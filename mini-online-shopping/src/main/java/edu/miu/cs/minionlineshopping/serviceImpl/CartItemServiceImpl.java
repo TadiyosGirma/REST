@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import edu.miu.cs.minionlineshopping.dao.CartDao;
 import edu.miu.cs.minionlineshopping.dao.CartItemDao;
+import edu.miu.cs.minionlineshopping.exceptions.CartItemNotFoundException;
 import edu.miu.cs.minionlineshopping.model.CartItem;
 
 @Service
@@ -24,15 +28,29 @@ public class CartItemServiceImpl {
 //		return cartItemDao.findAll();
 //	}
 
-	public Optional<CartItem> findACartItem(Long id) { 
-		return cartItemDao.findById(id);
+	public Optional<CartItem> findOneCartItem(Long id) {
+		Optional<CartItem> cartItemReturnded = cartItemDao.findById(id);
+
+		if (!cartItemReturnded.isPresent()) {
+			throw new CartItemNotFoundException("id: " + id);
+		} else {
+			return cartItemReturnded;
+		}
+	}
+
+	public ResponseEntity<CartItem> updateCartItem(Long id, CartItem cartItem) {
+		Optional<CartItem> cartItemExisting = cartItemDao.findById(id);
+
+		if (!cartItemExisting.isPresent()) {
+			throw new CartItemNotFoundException("id: " + id);
+		} else {
+			CartItem cartItemUpdated = cartItemDao.save(cartItem);
+			return new ResponseEntity<CartItem>(cartItemUpdated, HttpStatus.CREATED);
+		}
 	}
 
 	public void deleteCartItem(Long id) {
 		cartItemDao.deleteById(id);
 	}
-	//START HERE
-	public CartItem updateCartItem(CartItem cartItem) {
-		return cartItemDao.save(cartItem);
-	}
+
 }
